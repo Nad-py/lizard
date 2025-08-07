@@ -1,14 +1,15 @@
 const PARAMS = new URLSearchParams(window.location.search);
 const LIZARDSOUND = document.getElementById("lizardSound");
-const username = PARAMS.get("username");
-
+const USERNAME = PARAMS.get("username");
+const VOLUME = parseInt(PARAMS.get("volume"));
 
 ComfyJS.onChat = ( user, message, flags, self, extra ) => {
-    console.log("works");
     if(message.toLowerCase().includes("lizard")){
+        let normalizedVolume = !isNaN(VOLUME) ? Math.max(0.01, Math.min(1, VOLUME / 100)) : 1;
+        LIZARDSOUND.volume = normalizedVolume; 
         LIZARDSOUND.currentTime = 0;
         LIZARDSOUND.play();
-    }
+    }   
 }
 
-ComfyJS.Init(username);
+ComfyJS.Init(USERNAME);
