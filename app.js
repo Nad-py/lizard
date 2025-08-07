@@ -1,18 +1,14 @@
 const PARAMS = new URLSearchParams(window.location.search);
 const LIZARDSOUND = document.getElementById("lizardSound");
-username = PARAMS.get("username");
-
-const client = new tmi.Client({
-    channels: [ username ]
-});
+const username = PARAMS.get("username");
 
 
-client.connect();
-
-
-client.on('message', (channel, tags, message, self) => { 
+ComfyJS.onChat = ( user, message, flags, self, extra ) => {
+    console.log("works");
     if(message.toLowerCase().includes("lizard")){
         LIZARDSOUND.currentTime = 0;
         LIZARDSOUND.play();
     }
-});
+}
+
+ComfyJS.Init(username);
